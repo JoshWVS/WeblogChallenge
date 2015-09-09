@@ -1,12 +1,12 @@
-/* SimpleApp.scala */
+/* WeblogChallenge.scala */
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
 
-object SimpleApp {
+object WeblogChallenge {
   def main(args: Array[String]) {
-    val logFile = "/home/josh/Career/technical_questions/WeblogChallenge/data/2015_07_22_mktplace_shop_web_log_sample.log.gz" // Should be some file on your system
-    val conf = new SparkConf().setAppName("Simple Application")
+
+    val conf = new SparkConf().setAppName("Weblog Challenge")
     val sc = new SparkContext(conf)
     val logData = sc.textFile(logFile, 2).cache()
     val numAs = logData.filter(line => line.contains("a")).count()

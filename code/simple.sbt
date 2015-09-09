@@ -1,4 +1,4 @@
-name := "Simple Project"
+name := "Weblog Challenge"
 
 version := "1.0"
 
