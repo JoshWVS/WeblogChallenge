@@ -11,8 +11,11 @@ object WeblogChallenge {
     val conf = new SparkConf().setAppName("Weblog Challenge")
     val sc = new SparkContext(conf)
     val logData = sc.textFile(logFile, 2).cache()
-    val numAs = logData.filter(line => line.contains("a")).count()
-    val numBs = logData.filter(line => line.contains("b")).count()
-    println("Lines with a: %s, Lines with b: %s".format(numAs, numBs))
+
+    // For each line (i.e. log entry), extract IP and timestamp
+    logData.map(line => {
+        val logEntry = line.split(" ")
+        (logEntry(0), logEntry(2).split(":")(0)) // drop the port from the IP
+    }).take(10).foreach(println)
   }
 }
