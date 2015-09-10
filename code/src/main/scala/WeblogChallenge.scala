@@ -15,9 +15,10 @@ object WeblogChallenge {
 
     // For each line (i.e. log entry), extract IP and timestamp
     logData.map(line => {
-        val logEntry = line.split(" ")
+        val logEntry = line.split(" ") // per AWS documentation: space-delimited fields (consistent order)
         val timestamp = new DateTime(logEntry(0))
+        // for each line, output (IP, (time, time)) (first is start time, second is end time)
         (logEntry(2).split(":")(0), (timestamp, timestamp)) // drop the port from the IP
-    }).take(10).foreach(println)
+    }).reduceByKey((a, b) => if (a > b) (b, a) else (a, b)).take(10).foreach(println)
   }
 }
