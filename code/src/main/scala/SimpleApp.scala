@@ -2,6 +2,7 @@
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
+import com.github.nscala_time.time.Imports._
 
 object WeblogChallenge {
   def main(args: Array[String]) {
@@ -15,7 +16,8 @@ object WeblogChallenge {
     // For each line (i.e. log entry), extract IP and timestamp
     logData.map(line => {
         val logEntry = line.split(" ")
-        (logEntry(0), logEntry(2).split(":")(0)) // drop the port from the IP
+        val timestamp = new DateTime(logEntry(0))
+        (logEntry(2).split(":")(0), (timestamp, timestamp)) // drop the port from the IP
     }).take(10).foreach(println)
   }
 }
